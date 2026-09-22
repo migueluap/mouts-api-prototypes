@@ -363,3 +363,14 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 .idea
+/.claude
+/CLAUDE.md
+/Resolucion.md
+/Etapa4_Documentation.md
+/Etapa4_Documentation_Updated.md
+/nul
+
+# Local configuration files with secrets
+**/appsettings.*.local.json
+**/appsettings.local.json
+secrets.json

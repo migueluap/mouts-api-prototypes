@@ -77,6 +77,13 @@ public class Sale : BaseEntity
     public DateTime? UpdatedAt { get; private set; }
 
     /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// This is automatically managed by the database and EF Core.
+    /// Used to detect concurrent modifications to prevent lost updates.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+
+    /// <summary>
     /// Private backing field for the items collection.
     /// Prevents direct external modification of the collection.
     /// </summary>

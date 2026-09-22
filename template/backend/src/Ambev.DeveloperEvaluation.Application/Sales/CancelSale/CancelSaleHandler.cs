@@ -1,5 +1,7 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Events;
 
@@ -45,8 +47,19 @@ public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleRe
         // Cancel the sale using the domain method (this throws if already cancelled)
         sale.Cancel();
 
-        // Persist the changes
-        var updatedSale = await _saleRepository.UpdateAsync(sale, cancellationToken);
+        // Persist the changes with optimistic concurrency control
+        Sale updatedSale;
+        try
+        {
+            // Set the RowVersion from the command to enable concurrency check
+            sale.RowVersion = command.RowVersion;
+            updatedSale = await _saleRepository.UpdateAsync(sale, cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvalidOperationException(
+                "The sale was modified by another user. Please reload the sale and try again.");
+        }
 
         // Publish domain event
         var saleCancelledEvent = new SaleCancelledEvent(updatedSale, "Sale cancelled by user request");

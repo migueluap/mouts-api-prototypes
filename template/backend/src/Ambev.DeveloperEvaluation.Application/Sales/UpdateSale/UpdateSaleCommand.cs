@@ -18,6 +18,12 @@ public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     public Guid SaleId { get; set; }
 
     /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// Must match the current version in the database to prevent lost updates.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+
+    /// <summary>
     /// Gets or sets the list of items to update.
     /// Each item must include the ItemId for updates.
     /// </summary>

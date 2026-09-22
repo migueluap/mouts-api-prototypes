@@ -73,6 +73,13 @@ public class SaleItem : BaseEntity
     public DateTime? CancelledAt { get; private set; }
 
     /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// This is automatically managed by the database and EF Core.
+    /// Used to detect concurrent modifications to prevent lost updates.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+
+    /// <summary>
     /// Calculates the appropriate discount percentage based on quantity.
     /// Business Rules:
     /// - Less than 4 items: 0% discount

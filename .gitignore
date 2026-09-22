@@ -374,3 +374,4 @@ FodyWeavers.xsd
 **/appsettings.*.local.json
 **/appsettings.local.json
 secrets.json
+/COMMITS.md

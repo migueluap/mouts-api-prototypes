@@ -13,8 +13,10 @@ public class CancelSaleProfile : Profile
     /// </summary>
     public CancelSaleProfile()
     {
-        CreateMap<Guid, CancelSaleCommand>()
-            .ConstructUsing(id => new CancelSaleCommand(id));
+        // Mapping from Guid to CancelSaleCommand is no longer used
+        // Command is now constructed manually in the controller to include RowVersion
+        // CreateMap<Guid, CancelSaleCommand>()
+        //     .ConstructUsing(id => new CancelSaleCommand(id, Array.Empty<byte>()));
 
         CreateMap<CancelSaleResult, CancelSaleResponse>();
     }

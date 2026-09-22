@@ -1,5 +1,6 @@
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Middleware;
@@ -79,6 +80,17 @@ public class ErrorHandlingMiddleware
                         Field = e.PropertyName,
                         Message = e.ErrorMessage
                     })
+                }
+            ),
+
+            // 409 Conflict - Concurrency conflicts
+            DbUpdateConcurrencyException concurrencyEx => (
+                StatusCodes.Status409Conflict,
+                new ErrorResponse
+                {
+                    Type = "ConcurrencyConflict",
+                    Error = "Concurrency conflict detected",
+                    Detail = "The resource was modified by another user. Please reload the resource and try again."
                 }
             ),
 

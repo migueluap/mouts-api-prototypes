@@ -50,6 +50,11 @@ public class CreateSaleResult
     public decimal TotalAmount { get; set; }
 
     /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+
+    /// <summary>
     /// Gets or sets the list of sale items.
     /// </summary>
     public List<CreateSaleItemResult> Items { get; set; } = new();
@@ -94,4 +99,9 @@ public class CreateSaleItemResult
     /// Gets or sets the total amount for this line item after discount.
     /// </summary>
     public decimal TotalAmount { get; set; }
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

@@ -40,7 +40,7 @@ public class CancelSaleHandlerTests
     {
         // Given
         var sale = SaleTestData.GenerateValidSale(2);
-        var command = new CancelSaleCommand(sale.Id);
+        var command = new CancelSaleCommand(sale.Id, sale.RowVersion);
 
         var result = new CancelSaleResult
         {
@@ -74,7 +74,7 @@ public class CancelSaleHandlerTests
     public async Task Handle_NonExistentSaleId_ThrowsKeyNotFoundException()
     {
         // Given
-        var command = new CancelSaleCommand(Guid.NewGuid());
+        var command = new CancelSaleCommand(Guid.NewGuid(), Array.Empty<byte>());
 
         _saleRepository.GetByIdAsync(command.SaleId, Arg.Any<CancellationToken>())
             .Returns((Sale?)null);
@@ -96,7 +96,7 @@ public class CancelSaleHandlerTests
         // Given
         var sale = SaleTestData.GenerateValidSale(2);
         sale.Cancel(); // Cancel it first
-        var command = new CancelSaleCommand(sale.Id);
+        var command = new CancelSaleCommand(sale.Id, sale.RowVersion);
 
         _saleRepository.GetByIdAsync(command.SaleId, Arg.Any<CancellationToken>())
             .Returns(sale);
@@ -117,7 +117,7 @@ public class CancelSaleHandlerTests
     {
         // Given
         var sale = SaleTestData.GenerateValidSale(2);
-        var command = new CancelSaleCommand(sale.Id);
+        var command = new CancelSaleCommand(sale.Id, sale.RowVersion);
 
         _saleRepository.GetByIdAsync(command.SaleId, Arg.Any<CancellationToken>())
             .Returns(sale);
@@ -142,7 +142,7 @@ public class CancelSaleHandlerTests
     {
         // Given
         var sale = SaleTestData.GenerateValidSale(2);
-        var command = new CancelSaleCommand(sale.Id);
+        var command = new CancelSaleCommand(sale.Id, sale.RowVersion);
         var result = new CancelSaleResult { Id = sale.Id, Cancelled = true };
 
         _saleRepository.GetByIdAsync(command.SaleId, Arg.Any<CancellationToken>())
@@ -166,7 +166,7 @@ public class CancelSaleHandlerTests
     {
         // Given
         var sale = SaleTestData.GenerateValidSale(3);
-        var command = new CancelSaleCommand(sale.Id);
+        var command = new CancelSaleCommand(sale.Id, sale.RowVersion);
 
         _saleRepository.GetByIdAsync(command.SaleId, Arg.Any<CancellationToken>())
             .Returns(sale);

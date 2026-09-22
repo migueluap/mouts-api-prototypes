@@ -24,4 +24,9 @@ public class CancelSaleResult
     /// Gets or sets whether the sale is cancelled (should always be true).
     /// </summary>
     public bool Cancelled { get; set; }
+
+    /// <summary>
+    /// Gets or sets the new row version after cancellation for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

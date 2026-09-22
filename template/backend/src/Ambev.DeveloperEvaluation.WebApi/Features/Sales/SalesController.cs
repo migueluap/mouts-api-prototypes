@@ -148,22 +148,23 @@ public class SalesController : BaseController
     /// Cancels a sale. Once cancelled, the sale cannot be modified.
     /// </summary>
     /// <param name="id">The unique identifier of the sale to cancel</param>
+    /// <param name="request">The cancel request containing the row version for concurrency control</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The cancellation result</returns>
     [HttpPost("{id}/cancel")]
     [ProducesResponseType(typeof(ApiResponseWithData<CancelSaleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CancelSale([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> CancelSale([FromRoute] Guid id, [FromBody] CancelSaleRequest request, CancellationToken cancellationToken)
     {
-        var request = new CancelSaleRequest { Id = id };
+        request.Id = id;
         var validator = new CancelSaleRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<CancelSaleCommand>(request.Id);
+        var command = new CancelSaleCommand(request.Id, request.RowVersion);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(_mapper.Map<CancelSaleResponse>(response));

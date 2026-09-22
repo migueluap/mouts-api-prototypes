@@ -29,6 +29,11 @@ public class UpdateSaleResult
     /// Gets or sets the update timestamp.
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the new row version after the update for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }
 
 /// <summary>
@@ -70,4 +75,9 @@ public class UpdateSaleItemResult
     /// Gets or sets the total amount for this line item.
     /// </summary>
     public decimal TotalAmount { get; set; }
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

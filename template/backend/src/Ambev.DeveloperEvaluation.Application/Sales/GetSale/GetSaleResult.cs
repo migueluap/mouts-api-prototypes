@@ -66,6 +66,12 @@ public class GetSaleResult
     public DateTime? UpdatedAt { get; set; }
 
     /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// This value should be sent back when updating or cancelling the sale.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+
+    /// <summary>
     /// Gets or sets the list of sale items.
     /// </summary>
     public List<GetSaleItemResult> Items { get; set; } = new();
@@ -120,4 +126,9 @@ public class GetSaleItemResult
     /// Gets or sets the date when this item was cancelled (if applicable).
     /// </summary>
     public DateTime? CancelledAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

@@ -71,5 +71,13 @@ public class SaleItemConfiguration : IEntityTypeConfiguration<SaleItem>
         builder.HasIndex(si => si.SaleId);
         builder.HasIndex(si => si.ProductId);
         builder.HasIndex(si => si.Cancelled);
+
+        // Optimistic Concurrency Control
+        // PostgreSQL: Map to bytea type for row versioning
+        builder.Property(si => si.RowVersion)
+            .IsRowVersion()
+            .HasColumnType("bytea")
+            .ValueGeneratedOnAddOrUpdate()
+            .IsConcurrencyToken();
     }
 }

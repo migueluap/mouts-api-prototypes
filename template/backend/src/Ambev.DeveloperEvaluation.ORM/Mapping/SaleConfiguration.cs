@@ -93,5 +93,13 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.HasIndex(s => s.BranchId);
         builder.HasIndex(s => s.Date);
         builder.HasIndex(s => s.Cancelled);
+
+        // Optimistic Concurrency Control
+        // PostgreSQL: Map to xmin system column (concurrency token)
+        builder.Property(s => s.RowVersion)
+            .IsRowVersion()
+            .HasColumnType("bytea")
+            .ValueGeneratedOnAddOrUpdate()
+            .IsConcurrencyToken();
     }
 }

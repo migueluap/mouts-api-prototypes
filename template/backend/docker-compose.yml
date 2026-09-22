@@ -12,6 +12,7 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__DefaultConnection=Host=ambev.developerevaluation.database;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
+      - Jwt__SecretKey=YourSuperSecretKeyForJwtTokenGenerationThatShouldBeAtLeast32BytesLong
     ports:
       - "8080:8080"
     depends_on:

@@ -49,6 +49,12 @@ public class CreateSaleResponse
     /// Gets or sets the list of sale items.
     /// </summary>
     public List<CreateSaleItemResponse> Items { get; set; } = new();
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// This value must be sent back when updating or cancelling the sale.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }
 
 /// <summary>
@@ -90,4 +96,9 @@ public class CreateSaleItemResponse
     /// Gets or sets the total amount for this line item.
     /// </summary>
     public decimal TotalAmount { get; set; }
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

@@ -105,19 +105,13 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
             throw new ValidationException(errors);
         }
 
+        // Set the RowVersion from the command to enable concurrency check
+        sale.RowVersion = command.RowVersion;
+
         // Persist the changes with optimistic concurrency control
-        Sale updatedSale;
-        try
-        {
-            // Set the RowVersion from the command to enable concurrency check
-            sale.RowVersion = command.RowVersion;
-            updatedSale = await _saleRepository.UpdateAsync(sale, cancellationToken);
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            throw new InvalidOperationException(
-                "The sale was modified by another user. Please reload the sale and try again.");
-        }
+        // If RowVersion mismatch occurs, DbUpdateConcurrencyException will bubble up
+        // to ErrorHandlingMiddleware which will return HTTP 409 Conflict
+        var updatedSale = await _saleRepository.UpdateAsync(sale, cancellationToken);
 
         // Publish domain event
         var modificationsDescription = BuildModificationDescription(itemsToRemove.Count, command.Items.Count);

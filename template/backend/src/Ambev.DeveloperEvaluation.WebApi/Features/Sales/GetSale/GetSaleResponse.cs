@@ -69,6 +69,12 @@ public class GetSaleResponse
     /// Gets or sets the list of sale items.
     /// </summary>
     public List<GetSaleItemResponse> Items { get; set; } = new();
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// This value must be sent back when updating or cancelling the sale.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }
 
 /// <summary>
@@ -120,4 +126,9 @@ public class GetSaleItemResponse
     /// Gets or sets the cancellation date for this item.
     /// </summary>
     public DateTime? CancelledAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

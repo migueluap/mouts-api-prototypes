@@ -375,3 +375,12 @@ FodyWeavers.xsd
 **/appsettings.local.json
 secrets.json
 /COMMITS.md
+/template/backend/ROWVERSION_VS_LOCK.md
+/template/backend/API_TESTS.md
+/template/backend/create_test_data.py
+/template/backend/EXTERNAL_IDENTITY_PATTERN.md
+/template/backend/filter_test_results.txt
+/template/backend/test_filters.py
+/template/backend/test_sale.json
+/template/backend/DOMAIN_EVENTS_VALIDATION.md
+/template/backend/test_domain_events.py

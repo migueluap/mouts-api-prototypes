@@ -29,6 +29,12 @@ public class UpdateSaleResponse
     /// Gets or sets the update timestamp.
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the row version for optimistic concurrency control.
+    /// This updated value must be sent back in subsequent updates or cancel operations.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }
 
 /// <summary>
